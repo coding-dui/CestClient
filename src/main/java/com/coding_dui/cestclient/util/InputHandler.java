@@ -1,7 +1,7 @@
 package com.coding_dui.cestclient.util;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.util.InputUtil;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.Minecraft;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,11 +20,11 @@ public class InputHandler {
         if (keyCode <= 0) {
             return false;
         }
-        MinecraftClient mc = MinecraftClient.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         if (mc == null || mc.getWindow() == null) {
             return false;
         }
-        boolean down = InputUtil.isKeyPressed(mc.getWindow().getHandle(), keyCode);
+        boolean down = InputConstants.isKeyDown(mc.getWindow(), keyCode);
         boolean wasDown = heldKeys.contains(keyCode);
         if (down && !wasDown) {
             heldKeys.add(keyCode);

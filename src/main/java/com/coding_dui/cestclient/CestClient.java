@@ -7,10 +7,10 @@ import com.coding_dui.cestclient.module.ModuleManager;
 import com.coding_dui.cestclient.util.ChatUtils;
 import com.coding_dui.cestclient.util.InputHandler;
 import net.fabricmc.api.ClientModInitializer;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.screens.Screen;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,28 +50,28 @@ public class CestClient implements ClientModInitializer {
                 moduleManager.getModules().size(), commandManager.getCommands().size());
     }
 
-    /** Called from the player tick mixin. */
+    /** Called from the local player tick mixin. */
     public void onClientTick() {
-        MinecraftClient mc = MinecraftClient.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         if (mc == null) {
             return;
         }
         if (pendingScreen != null) {
-            mc.setScreen(pendingScreen);
+            mc.gui.setScreen(pendingScreen);
             pendingScreen = null;
         }
         if (mc.player == null) {
             return;
         }
         moduleManager.onTick();
-        if (mc.currentScreen == null) {
+        if (mc.gui.screen() == null) {
             handleKeybinds(mc);
         }
     }
 
-    private void handleKeybinds(MinecraftClient mc) {
+    private void handleKeybinds(Minecraft mc) {
         if (inputHandler.consumePress(GUI_KEY)) {
-            mc.setScreen(new ClickGuiScreen());
+            mc.gui.setScreen(new ClickGuiScreen());
             return;
         }
         if (inputHandler.consumePress(PANIC_KEY)) {
@@ -113,36 +113,35 @@ public class CestClient implements ClientModInitializer {
     }
 
     /** Draws the watermark, the enabled-module list and (when enabled) debug info. */
-    public void renderHud(DrawContext context) {
-        MinecraftClient mc = MinecraftClient.getInstance();
-        if (mc == null || mc.player == null || mc.options == null || mc.options.hudHidden) {
+    public void renderHud(GuiGraphicsExtractor context) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc == null || mc.player == null) {
             return;
         }
-        TextRenderer textRenderer = mc.textRenderer;
+        Font font = mc.font;
         int y = 4;
 
-        context.drawTextWithShadow(textRenderer, "CestClient", 4, y, 0xFF00E0FF);
+        context.text(font, "CestClient", 4, y, 0xFF00E0FF);
         y += 11;
 
         List<Module> enabled = new ArrayList<>(moduleManager.getEnabledModules());
         enabled.sort(Comparator.comparing(Module::getName));
         for (Module module : enabled) {
-            context.drawTextWithShadow(textRenderer, module.getName(), 4, y, 0xFF55FF55);
+            context.text(font, module.getName(), 4, y, 0xFF55FF55);
             y += 10;
         }
 
         if (debug) {
             y += 2;
-            context.drawTextWithShadow(textRenderer, "Debug mode", 4, y, 0xFFFFFF55);
+            context.text(font, "Debug mode", 4, y, 0xFFFFFF55);
             y += 10;
-            context.drawTextWithShadow(textRenderer, "FPS: " + mc.getCurrentFps(), 4, y, 0xFFBBBBBB);
+            context.text(font, "FPS: " + mc.getFps(), 4, y, 0xFFBBBBBB);
             y += 10;
-            context.drawTextWithShadow(textRenderer,
+            context.text(font,
                     String.format("XYZ: %.1f / %.1f / %.1f", mc.player.getX(), mc.player.getY(), mc.player.getZ()),
                     4, y, 0xFFBBBBBB);
             y += 10;
-            context.drawTextWithShadow(textRenderer,
-                    "Module count: " + moduleManager.getModules().size(), 4, y, 0xFFBBBBBB);
+            context.text(font, "Module count: " + moduleManager.getModules().size(), 4, y, 0xFFBBBBBB);
         }
     }
 

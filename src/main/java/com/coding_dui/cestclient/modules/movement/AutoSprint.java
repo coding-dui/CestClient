@@ -2,7 +2,7 @@ package com.coding_dui.cestclient.modules.movement;
 
 import com.coding_dui.cestclient.module.Category;
 import com.coding_dui.cestclient.module.Module;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public class AutoSprint extends Module {
     public AutoSprint() {
@@ -11,11 +11,11 @@ public class AutoSprint extends Module {
 
     @Override
     public void onTick() {
-        MinecraftClient mc = MinecraftClient.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.player.input == null) {
             return;
         }
-        if (mc.player.input.hasForwardMovement() && !mc.player.isSneaking()) {
+        if (mc.player.input.hasForwardImpulse() && !mc.player.isShiftKeyDown()) {
             mc.player.setSprinting(true);
         }
     }

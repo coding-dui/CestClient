@@ -2,10 +2,20 @@
 
 CestClient is a Minecraft hack client, open-source and having a bunch of features :)
 
+## Requirements
+
+- **Minecraft 26.2** (Fabric)
+- **Fabric Loader 0.19.5 or newer**
+- **Java 25**
+
+> Minecraft switched to calendar versioning after 1.21 (`26.1`, `26.2`, ...), and from
+> 26.1 onward the game ships unobfuscated. Fabric therefore dropped Yarn, so this mod
+> is built against **Mojang's official mappings** (no `mappings` line in `build.gradle`).
+
 ## Building
 
 ```bash
-./gradlew build
+JAVA_HOME=/path/to/jdk-25 ./gradlew build
 ```
 
 The remapped mod jar lands in `build/libs/` and can be dropped into your `mods/` folder.

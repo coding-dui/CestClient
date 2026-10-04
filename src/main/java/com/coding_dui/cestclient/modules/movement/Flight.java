@@ -2,7 +2,7 @@ package com.coding_dui.cestclient.modules.movement;
 
 import com.coding_dui.cestclient.module.Category;
 import com.coding_dui.cestclient.module.Module;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public class Flight extends Module {
     public Flight() {
@@ -11,30 +11,30 @@ public class Flight extends Module {
 
     @Override
     public void onEnable() {
-        MinecraftClient mc = MinecraftClient.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) {
             return;
         }
-        mc.player.getAbilities().allowFlying = true;
+        mc.player.getAbilities().mayfly = true;
     }
 
     @Override
     public void onTick() {
-        MinecraftClient mc = MinecraftClient.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) {
             return;
         }
-        mc.player.getAbilities().allowFlying = true;
+        mc.player.getAbilities().mayfly = true;
     }
 
     @Override
     public void onDisable() {
-        MinecraftClient mc = MinecraftClient.getInstance();
+        Minecraft mc = Minecraft.getInstance();
         if (mc.player == null) {
             return;
         }
-        if (!mc.player.isCreative()) {
-            mc.player.getAbilities().allowFlying = false;
+        if (!mc.player.getAbilities().instabuild) {
+            mc.player.getAbilities().mayfly = false;
             mc.player.getAbilities().flying = false;
         }
     }

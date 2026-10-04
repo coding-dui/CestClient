@@ -1,39 +1,39 @@
 package com.coding_dui.cestclient.util;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 
 /**
  * Sends messages to the local chat HUD only. Nothing here touches the network,
  * so feedback is never visible to other players.
  */
 public final class ChatUtils {
-    private static final String PREFIX = Formatting.AQUA + "[CestClient] " + Formatting.RESET;
+    private static final String PREFIX = ChatFormatting.AQUA + "[CestClient] " + ChatFormatting.RESET;
 
     private ChatUtils() {}
 
     public static void send(String message) {
-        MinecraftClient mc = MinecraftClient.getInstance();
-        if (mc == null || mc.inGameHud == null) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc == null || mc.gui == null || mc.gui.hud == null) {
             return;
         }
-        mc.inGameHud.getChatHud().addMessage(Text.literal(PREFIX + message));
+        mc.gui.hud.getChat().addClientSystemMessage(Component.literal(PREFIX + message));
     }
 
     public static void info(String message) {
-        send(Formatting.GRAY + message);
+        send(ChatFormatting.GRAY + message);
     }
 
     public static void success(String message) {
-        send(Formatting.GREEN + message);
+        send(ChatFormatting.GREEN + message);
     }
 
     public static void error(String message) {
-        send(Formatting.RED + message);
+        send(ChatFormatting.RED + message);
     }
 
     public static void warn(String message) {
-        send(Formatting.YELLOW + message);
+        send(ChatFormatting.YELLOW + message);
     }
 }

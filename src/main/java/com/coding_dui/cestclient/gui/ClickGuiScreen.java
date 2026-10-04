@@ -4,10 +4,12 @@ import com.coding_dui.cestclient.CestClient;
 import com.coding_dui.cestclient.module.Category;
 import com.coding_dui.cestclient.module.Module;
 import com.coding_dui.cestclient.util.ChatUtils;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.InputUtil;
-import net.minecraft.text.Text;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.network.chat.Component;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ public class ClickGuiScreen extends Screen {
     private Module bindingModule;
 
     public ClickGuiScreen() {
-        super(Text.literal("CestClient"));
+        super(Component.literal("CestClient"));
     }
 
     @Override
@@ -42,23 +44,27 @@ public class ClickGuiScreen extends Screen {
     }
 
     @Override
-    public void render(DrawContext context, int mouseX, int mouseY, float delta) {
-        this.renderBackground(context, mouseX, mouseY, delta);
+    public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
+        this.extractBackground(context, mouseX, mouseY, delta);
 
-        context.drawTextWithShadow(this.textRenderer, "CestClient", 6, 6, 0xFF00E0FF);
-        context.drawTextWithShadow(this.textRenderer,
+        context.text(this.font, "CestClient", 6, 6, 0xFF00E0FF);
+        context.text(this.font,
                 "Left-click: toggle   Right-click: bind key   Drag headers   ESC: close",
                 6, this.height - 12, 0xFFAAAAAA);
 
         for (CategoryPanel panel : panels) {
-            panel.render(context, this.textRenderer, mouseX, mouseY, bindingModule);
+            panel.extract(context, this.font, mouseX, mouseY, bindingModule);
         }
 
-        super.render(context, mouseX, mouseY, delta);
+        super.extractRenderState(context, mouseX, mouseY, delta);
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+        double mouseX = event.x();
+        double mouseY = event.y();
+        int button = event.button();
+
         // While binding, the next click cancels the bind.
         if (bindingModule != null) {
             bindingModule = null;
@@ -88,47 +94,48 @@ public class ClickGuiScreen extends Screen {
                 return true;
             }
         }
-        return super.mouseClicked(mouseX, mouseY, button);
+        return super.mouseClicked(event, doubleClick);
     }
 
     @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+    public boolean mouseReleased(MouseButtonEvent event) {
         if (draggingPanel != null) {
             draggingPanel = null;
             return true;
         }
-        return super.mouseReleased(mouseX, mouseY, button);
+        return super.mouseReleased(event);
     }
 
     @Override
-    public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
+    public boolean mouseDragged(MouseButtonEvent event, double deltaX, double deltaY) {
         if (draggingPanel != null) {
-            draggingPanel.x = (int) mouseX - dragOffsetX;
-            draggingPanel.y = (int) mouseY - dragOffsetY;
+            draggingPanel.x = (int) event.x() - dragOffsetX;
+            draggingPanel.y = (int) event.y() - dragOffsetY;
             return true;
         }
-        return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
+        return super.mouseDragged(event, deltaX, deltaY);
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+    public boolean keyPressed(KeyEvent event) {
         if (bindingModule != null) {
+            int keyCode = event.key();
             if (keyCode == GLFW.GLFW_KEY_ESCAPE || keyCode == GLFW.GLFW_KEY_DELETE) {
                 bindingModule.setKeybind(Module.NO_KEY);
                 ChatUtils.info("Cleared keybind for " + bindingModule.getName() + ".");
             } else {
                 bindingModule.setKeybind(keyCode);
-                String keyName = InputUtil.Type.KEYSYM.createFromCode(keyCode).getLocalizedText().getString();
+                String keyName = InputConstants.Type.KEYSYM.getOrCreate(keyCode).getDisplayName().getString();
                 ChatUtils.info("Bound " + bindingModule.getName() + " to " + keyName + ".");
             }
             bindingModule = null;
             return true;
         }
-        return super.keyPressed(keyCode, scanCode, modifiers);
+        return super.keyPressed(event);
     }
 
     @Override
-    public boolean shouldPause() {
+    public boolean isPauseScreen() {
         return false;
     }
 }

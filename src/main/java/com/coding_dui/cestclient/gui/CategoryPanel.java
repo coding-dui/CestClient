@@ -2,9 +2,9 @@ package com.coding_dui.cestclient.gui;
 
 import com.coding_dui.cestclient.module.Category;
 import com.coding_dui.cestclient.module.Module;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.util.InputUtil;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class CategoryPanel {
         return modules.get(index);
     }
 
-    public void render(DrawContext context, TextRenderer textRenderer, int mouseX, int mouseY, Module bindingModule) {
+    public void extract(GuiGraphicsExtractor context, Font font, int mouseX, int mouseY, Module bindingModule) {
         int height = getHeight();
 
         // Panel body and border.
@@ -59,7 +59,7 @@ public class CategoryPanel {
 
         // Header.
         context.fill(x, y, x + WIDTH, y + HEADER_HEIGHT - 1, category.getColor());
-        context.drawCenteredTextWithShadow(textRenderer, category.getDisplayName(), x + WIDTH / 2, y + 3, 0xFF141418);
+        context.centeredText(font, category.getDisplayName(), x + WIDTH / 2, y + 3, 0xFF141418);
 
         // Module rows.
         for (int i = 0; i < modules.size(); i++) {
@@ -81,12 +81,12 @@ public class CategoryPanel {
                 label = module.getName() + " ...";
                 color = 0xFFFFAA00;
             }
-            context.drawTextWithShadow(textRenderer, label, x + 3, rowY + 3, color);
+            context.text(font, label, x + 3, rowY + 3, color);
 
             if (module.getKeybind() != Module.NO_KEY && module != bindingModule) {
-                String key = InputUtil.Type.KEYSYM.createFromCode(module.getKeybind()).getLocalizedText().getString();
-                int keyWidth = textRenderer.getWidth(key);
-                context.drawTextWithShadow(textRenderer, key, x + WIDTH - keyWidth - 3, rowY + 3, 0xFF8888FF);
+                String key = InputConstants.Type.KEYSYM.getOrCreate(module.getKeybind()).getDisplayName().getString();
+                int keyWidth = font.width(key);
+                context.text(font, key, x + WIDTH - keyWidth - 3, rowY + 3, 0xFF8888FF);
             }
         }
     }
