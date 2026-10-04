@@ -2,15 +2,21 @@ package com.coding_dui.cestclient.module;
 
 import com.coding_dui.cestclient.modules.combat.AutoClicker;
 import com.coding_dui.cestclient.modules.combat.Criticals;
+import com.coding_dui.cestclient.modules.combat.KillAura;
+import com.coding_dui.cestclient.modules.combat.Reach;
 import com.coding_dui.cestclient.modules.misc.Bypass;
 import com.coding_dui.cestclient.modules.movement.AutoSprint;
+import com.coding_dui.cestclient.modules.movement.BunnyHop;
 import com.coding_dui.cestclient.modules.movement.Flight;
 import com.coding_dui.cestclient.modules.movement.HighJump;
 import com.coding_dui.cestclient.modules.movement.NoFall;
 import com.coding_dui.cestclient.modules.movement.Speed;
 import com.coding_dui.cestclient.modules.movement.Step;
+import com.coding_dui.cestclient.modules.movement.Velocity;
 import com.coding_dui.cestclient.modules.player.AutoRespawn;
+import com.coding_dui.cestclient.modules.player.AutoTool;
 import com.coding_dui.cestclient.modules.player.FastPlace;
+import com.coding_dui.cestclient.modules.player.Nuker;
 import com.coding_dui.cestclient.modules.render.Clock;
 import com.coding_dui.cestclient.modules.render.Coordinates;
 import com.coding_dui.cestclient.modules.render.FpsDisplay;
@@ -31,14 +37,20 @@ public class ModuleManager {
         register(new Step());
         register(new HighJump());
         register(new NoFall());
+        register(new Velocity());
+        register(new BunnyHop());
 
         // Player
         register(new AutoRespawn());
         register(new FastPlace());
+        register(new AutoTool());
+        register(new Nuker());
 
         // Combat
         register(new AutoClicker());
         register(new Criticals());
+        register(new KillAura());
+        register(new Reach());
 
         // Render
         register(new Fullbright());

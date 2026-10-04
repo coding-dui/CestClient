@@ -5,6 +5,7 @@
   "mixins": [
     "ChatScreenMixin",
     "GuiMixin",
+    "LivingEntityKnockbackMixin",
     "LocalPlayerMixin",
     "MinecraftAccessor"
   ],

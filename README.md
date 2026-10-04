@@ -58,11 +58,17 @@ them and they do not appear in your chat history.
 
 | Category | Modules |
 | --- | --- |
-| Combat | `AutoClicker`, `Criticals` |
-| Movement | `Flight`, `AutoSprint`, `Speed`, `Step`, `HighJump`, `NoFall` |
-| Player | `AutoRespawn`, `FastPlace` |
+| Combat | `AutoClicker`, `Criticals`, `KillAura`, `Reach` |
+| Movement | `Flight`, `AutoSprint`, `Speed`, `Step`, `HighJump`, `NoFall`, `Velocity`, `BunnyHop` |
+| Player | `AutoRespawn`, `FastPlace`, `AutoTool`, `Nuker` |
 | Render | `Fullbright`, `Coordinates`, `FPS`, `Ping`, `Clock` |
 | Misc | `Bypass` |
+
+> 3D world overlay modules (ESP, Tracers, Nametags) are not implemented yet — they need
+> world-to-screen drawing in 26.2's new extract-render model.
+
+These are singleplayer / anarchy tools. `KillAura`, `Nuker`, `Velocity`, `Reach` and
+`Criticals` are trivially detectable and will get you banned on any moderated server.
 
 New modules only need to extend `Module`, implement `onTick`/`onEnable`/`onDisable`
 (and optionally `onRenderHud` to draw on the HUD), then be registered in `ModuleManager`.
