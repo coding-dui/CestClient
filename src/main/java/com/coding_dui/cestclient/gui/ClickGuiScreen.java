@@ -45,8 +45,9 @@ public class ClickGuiScreen extends Screen {
 
     @Override
     public void extractRenderState(GuiGraphicsExtractor context, int mouseX, int mouseY, float delta) {
-        this.extractBackground(context, mouseX, mouseY, delta);
-
+        // The screen framework already drew the dimmed/blurred background in its own stratum
+        // before calling this method. Drawing it again here would put the full-screen menu
+        // background into our layer and hide the panels, so only our own content is drawn.
         context.text(this.font, "CestClient", 6, 6, 0xFF00E0FF);
         context.text(this.font,
                 "Left-click: toggle   Right-click: bind key   Drag headers   ESC: close",

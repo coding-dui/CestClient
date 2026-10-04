@@ -1,17 +1,21 @@
 package com.coding_dui.cestclient.module;
 
 import com.coding_dui.cestclient.modules.combat.AutoClicker;
+import com.coding_dui.cestclient.modules.combat.Criticals;
 import com.coding_dui.cestclient.modules.misc.Bypass;
 import com.coding_dui.cestclient.modules.movement.AutoSprint;
 import com.coding_dui.cestclient.modules.movement.Flight;
+import com.coding_dui.cestclient.modules.movement.HighJump;
 import com.coding_dui.cestclient.modules.movement.NoFall;
 import com.coding_dui.cestclient.modules.movement.Speed;
 import com.coding_dui.cestclient.modules.movement.Step;
 import com.coding_dui.cestclient.modules.player.AutoRespawn;
 import com.coding_dui.cestclient.modules.player.FastPlace;
+import com.coding_dui.cestclient.modules.render.Clock;
 import com.coding_dui.cestclient.modules.render.Coordinates;
 import com.coding_dui.cestclient.modules.render.FpsDisplay;
 import com.coding_dui.cestclient.modules.render.Fullbright;
+import com.coding_dui.cestclient.modules.render.Ping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +29,7 @@ public class ModuleManager {
         register(new AutoSprint());
         register(new Speed());
         register(new Step());
+        register(new HighJump());
         register(new NoFall());
 
         // Player
@@ -33,11 +38,14 @@ public class ModuleManager {
 
         // Combat
         register(new AutoClicker());
+        register(new Criticals());
 
         // Render
         register(new Fullbright());
         register(new Coordinates());
         register(new FpsDisplay());
+        register(new Ping());
+        register(new Clock());
 
         // Misc. Kept last so its "legit mode" clamping runs after everything else.
         register(new Bypass());

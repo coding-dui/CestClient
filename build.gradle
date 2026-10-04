@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-version = '1.0.0'
+version = '0.0.2-pre-dev'
 group = 'com.coding_dui'
 
 repositories {

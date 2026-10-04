@@ -52,15 +52,16 @@ them and they do not appear in your chat history.
 | `@panic` | Disables every enabled module |
 | `@debug` | Toggles the debug HUD overlay |
 | `@help` | Lists every command |
+| `@bind <module> <key>` | Binds a module to a key (`@bind Speed r`, `@bind Speed none`). With no arguments it lists active binds |
 
 ### Modules
 
 | Category | Modules |
 | --- | --- |
-| Combat | `AutoClicker` |
-| Movement | `Flight`, `AutoSprint`, `Speed`, `Step`, `NoFall` |
+| Combat | `AutoClicker`, `Criticals` |
+| Movement | `Flight`, `AutoSprint`, `Speed`, `Step`, `HighJump`, `NoFall` |
 | Player | `AutoRespawn`, `FastPlace` |
-| Render | `Fullbright`, `Coordinates`, `FPS` |
+| Render | `Fullbright`, `Coordinates`, `FPS`, `Ping`, `Clock` |
 | Misc | `Bypass` |
 
 New modules only need to extend `Module`, implement `onTick`/`onEnable`/`onDisable`

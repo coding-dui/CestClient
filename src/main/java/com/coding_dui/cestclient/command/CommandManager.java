@@ -1,6 +1,7 @@
 package com.coding_dui.cestclient.command;
 
 import com.coding_dui.cestclient.CestClient;
+import com.coding_dui.cestclient.command.commands.BindCommand;
 import com.coding_dui.cestclient.command.commands.ClickMenuCommand;
 import com.coding_dui.cestclient.command.commands.DebugCommand;
 import com.coding_dui.cestclient.command.commands.DisableCommand;
@@ -25,6 +26,7 @@ public class CommandManager {
         register(new PanicCommand());
         register(new DebugCommand());
         register(new HelpCommand());
+        register(new BindCommand());
     }
 
     private void register(Command command) {
