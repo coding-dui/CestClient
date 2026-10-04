@@ -3,7 +3,9 @@
   "package": "com.coding_dui.cestclient.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ClientPlayerEntityMixin"
+    "ChatScreenMixin",
+    "ClientPlayerEntityMixin",
+    "InGameHudMixin"
   ],
   "injectors": {
     "defaultRequire": 1

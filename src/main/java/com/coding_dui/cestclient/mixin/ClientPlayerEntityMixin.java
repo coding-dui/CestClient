@@ -10,9 +10,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin {
     @Inject(method = "tick", at = @At("RETURN"))
-    private void onTickReturn(CallbackInfo ci) {
-        if (CestClient.INSTANCE != null && CestClient.INSTANCE.getModuleManager() != null) {
-            CestClient.INSTANCE.getModuleManager().onTick();
+    private void cestclient$onTick(CallbackInfo ci) {
+        if (CestClient.INSTANCE != null) {
+            CestClient.INSTANCE.onClientTick();
         }
     }
 }

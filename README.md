@@ -1,28 +1,58 @@
-
 # CestClient
 
 CestClient is a Minecraft hack client, open-source and having a bunch of features :)
 
+## Building
 
-## Usage.
+```bash
+./gradlew build
+```
+
+The remapped mod jar lands in `build/libs/` and can be dropped into your `mods/` folder.
+
+## Usage
 
 You can use this hack client by...
 
 Putting it in your mod folder you dingle berry..
 
+## Menu
+
+Open the ClickGUI with the **Right Shift** key (or run `@clickmenu`).
+
+- **Left-click** a module to toggle it on or off.
+- **Right-click** a module, then press a key, to bind it to a hotkey (press ESC to clear).
+- **Drag** a category header to move the panel around.
+- **ESC** closes the menu. The game keeps running while it is open.
+
+The HUD in the top-left shows the watermark and every enabled module. The debug
+overlay adds FPS, coordinates and more when enabled with `@debug`.
+
 ## Commands
 
-prefix - @<command>
+Commands are typed into the chat with the `@` prefix. They are executed on your
+client only - they are **never sent to the server**, so other players never see
+them and they do not appear in your chat history.
 
-@enable <feature>
+| Command | Description |
+| --- | --- |
+| `@enable <module>` | Enables a module |
+| `@disable <module>` | Disables a module |
+| `@clickmenu` | Opens the ClickGUI |
+| `@panic` | Disables every enabled module |
+| `@debug` | Toggles the debug HUD overlay |
+| `@help` | Lists every command |
 
-@disable <feature>
+Available modules: `Flight`, `AutoSprint`, `Fullbright`.
 
-@clickmenu
+## Keybinds
 
-@panic
+| Key | Action |
+| --- | --- |
+| Right Shift | Open the ClickGUI |
+| Delete | Panic (disable every module) |
 
-@debug
+Per-module hotkeys can be bound from the ClickGUI.
 
 ## FAQ
 

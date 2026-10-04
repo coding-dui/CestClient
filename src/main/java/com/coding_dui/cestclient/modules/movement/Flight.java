@@ -6,22 +6,33 @@ import net.minecraft.client.MinecraftClient;
 
 public class Flight extends Module {
     public Flight() {
-        super("Flight", Category.MOVEMENT);
+        super("Flight", "Allows you to fly in survival", Category.MOVEMENT);
+    }
+
+    @Override
+    public void onEnable() {
+        MinecraftClient mc = MinecraftClient.getInstance();
+        if (mc.player == null) {
+            return;
+        }
+        mc.player.getAbilities().allowFlying = true;
     }
 
     @Override
     public void onTick() {
         MinecraftClient mc = MinecraftClient.getInstance();
-        if (mc.player == null) return;
-
+        if (mc.player == null) {
+            return;
+        }
         mc.player.getAbilities().allowFlying = true;
     }
 
     @Override
     public void onDisable() {
         MinecraftClient mc = MinecraftClient.getInstance();
-        if (mc.player == null) return;
-
+        if (mc.player == null) {
+            return;
+        }
         if (!mc.player.isCreative()) {
             mc.player.getAbilities().allowFlying = false;
             mc.player.getAbilities().flying = false;
