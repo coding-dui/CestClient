@@ -131,6 +131,11 @@ public class CestClient implements ClientModInitializer {
             y += 10;
         }
 
+        // Let modules append their own HUD lines (coordinates, FPS, ...).
+        for (Module module : enabled) {
+            y = module.onRenderHud(context, font, y);
+        }
+
         if (debug) {
             y += 2;
             context.text(font, "Debug mode", 4, y, 0xFFFFFF55);

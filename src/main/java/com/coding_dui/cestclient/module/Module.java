@@ -1,5 +1,7 @@
 package com.coding_dui.cestclient.module;
 
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import org.lwjgl.glfw.GLFW;
 
 public abstract class Module {
@@ -43,6 +45,16 @@ public abstract class Module {
 
     /** Called every client tick while the module is enabled. */
     public void onTick() {}
+
+    /**
+     * Called while drawing the HUD to append this module's own lines.
+     *
+     * @param y the current vertical cursor
+     * @return the updated vertical cursor
+     */
+    public int onRenderHud(GuiGraphicsExtractor context, Font font, int y) {
+        return y;
+    }
 
     public String getName() {
         return name;

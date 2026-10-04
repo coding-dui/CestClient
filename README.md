@@ -53,7 +53,27 @@ them and they do not appear in your chat history.
 | `@debug` | Toggles the debug HUD overlay |
 | `@help` | Lists every command |
 
-Available modules: `Flight`, `AutoSprint`, `Fullbright`.
+### Modules
+
+| Category | Modules |
+| --- | --- |
+| Combat | `AutoClicker` |
+| Movement | `Flight`, `AutoSprint`, `Speed`, `Step`, `NoFall` |
+| Player | `AutoRespawn`, `FastPlace` |
+| Render | `Fullbright`, `Coordinates`, `FPS` |
+| Misc | `Bypass` |
+
+New modules only need to extend `Module`, implement `onTick`/`onEnable`/`onDisable`
+(and optionally `onRenderHud` to draw on the HUD), then be registered in `ModuleManager`.
+They then appear in the GUI, the HUD, `@enable`/`@disable` and keybinds automatically.
+
+### Anti-cheat note
+
+The `Bypass` module is a **best-effort legit mode**, not a guarantee. It clamps boosted
+walking speed to a plausible value and clears accumulated fall distance, and it runs
+last so it overrides more aggressive modules. Real anti-cheats are server-side and are
+updated constantly; nothing client-side can promise to defeat a specific one. Use on
+servers where the rules allow it.
 
 ## Keybinds
 
