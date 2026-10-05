@@ -26,7 +26,7 @@ public class CestClient implements ClientModInitializer {
     public static CestClient INSTANCE;
 
     /** Default keys (GLFW codes) used by the client. */
-    public static final int GUI_KEY = GLFW.GLFW_KEY_RIGHT_SHIFT;
+    public static final int GUI_KEY = GLFW.GLFW_KEY_HOME;
     public static final int PANIC_KEY = GLFW.GLFW_KEY_DELETE;
 
     private ModuleManager moduleManager;
