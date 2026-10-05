@@ -3,6 +3,7 @@ package com.coding_dui.cestclient.module;
 import com.coding_dui.cestclient.modules.combat.AutoClicker;
 import com.coding_dui.cestclient.modules.combat.Criticals;
 import com.coding_dui.cestclient.modules.combat.KillAura;
+import com.coding_dui.cestclient.modules.combat.Orbit;
 import com.coding_dui.cestclient.modules.combat.Reach;
 import com.coding_dui.cestclient.modules.misc.Bypass;
 import com.coding_dui.cestclient.modules.movement.AutoSprint;
@@ -51,6 +52,7 @@ public class ModuleManager {
         register(new Criticals());
         register(new KillAura());
         register(new Reach());
+        register(new Orbit());
 
         // Render
         register(new Fullbright());

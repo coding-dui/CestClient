@@ -58,7 +58,7 @@ them and they do not appear in your chat history.
 
 | Category | Modules |
 | --- | --- |
-| Combat | `AutoClicker`, `Criticals`, `KillAura`, `Reach` |
+| Combat | `AutoClicker`, `Criticals`, `KillAura`, `Orbit`, `Reach` |
 | Movement | `Flight`, `AutoSprint`, `Speed`, `Step`, `HighJump`, `NoFall`, `Velocity`, `BunnyHop` |
 | Player | `AutoRespawn`, `FastPlace`, `AutoTool`, `Nuker` |
 | Render | `Fullbright`, `Coordinates`, `FPS`, `Ping`, `Clock` |
