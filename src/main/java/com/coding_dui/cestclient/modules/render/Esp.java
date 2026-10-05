@@ -73,7 +73,10 @@ public class Esp extends Module {
                 continue;
             }
             int color = entity instanceof Player ? PLAYER_COLOR : MOB_COLOR;
-            context.outline((int) minX, (int) minY, (int) maxX, (int) maxY, color);
+            // GuiGraphicsExtractor.outline takes (x, y, width, height), not the far corner.
+            int left = (int) minX;
+            int top = (int) minY;
+            context.outline(left, top, (int) maxX - left, (int) maxY - top, color);
         }
         return y;
     }
