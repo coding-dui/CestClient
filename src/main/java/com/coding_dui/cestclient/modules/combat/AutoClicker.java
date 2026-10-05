@@ -7,6 +7,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 
 public class AutoClicker extends Module {
+    /** Attack once the vanilla attack cooldown is nearly full, so hits deal real damage. */
+    private static final float FULL_CHARGE = 0.9F;
+
     public AutoClicker() {
         super("AutoClicker", "Attacks the entity under your crosshair", Category.COMBAT);
     }
@@ -18,6 +21,10 @@ public class AutoClicker extends Module {
             return;
         }
         if (!mc.options.keyAttack.isDown()) {
+            return;
+        }
+        // Attacking before the cooldown is ready deals heavily reduced damage, so wait for it.
+        if (mc.player.getAttackStrengthScale(0.0F) < FULL_CHARGE) {
             return;
         }
         Entity target = mc.crosshairPickEntity;

@@ -14,28 +14,17 @@ import net.minecraft.world.entity.player.Player;
  */
 public class KillAura extends Module {
     private static final double RANGE = 3.0D;
-    /** Ticks between hits, so it does not attack faster than a vanilla player. */
-    private static final int COOLDOWN_TICKS = 10;
-
-    private int cooldown;
+    /** Attack once the vanilla attack cooldown is nearly full, so hits deal real damage. */
+    private static final float FULL_CHARGE = 0.9F;
 
     public KillAura() {
         super("KillAura", "Attacks nearby entities automatically", Category.COMBAT);
     }
 
     @Override
-    public void onDisable() {
-        cooldown = 0;
-    }
-
-    @Override
     public void onTick() {
         Minecraft mc = Minecraft.getInstance();
         if (mc.player == null || mc.level == null || mc.gameMode == null) {
-            return;
-        }
-        if (cooldown > 0) {
-            cooldown--;
             return;
         }
 
@@ -55,10 +44,30 @@ public class KillAura extends Module {
             }
         }
 
-        if (target != null) {
-            mc.gameMode.attack(mc.player, target);
-            mc.player.swing(InteractionHand.MAIN_HAND);
-            cooldown = COOLDOWN_TICKS;
+        if (target == null) {
+            return;
         }
+
+        // Look at the target so the hit is aimed and the swing looks intentional.
+        faceTarget(mc, target);
+
+        // Attacking before the cooldown is ready deals heavily reduced damage, so wait for it.
+        if (mc.player.getAttackStrengthScale(0.0F) < FULL_CHARGE) {
+            return;
+        }
+        mc.gameMode.attack(mc.player, target);
+        mc.player.swing(InteractionHand.MAIN_HAND);
+    }
+
+    private static void faceTarget(Minecraft mc, Entity target) {
+        double dX = target.getX() - mc.player.getX();
+        double dY = target.getY() + target.getEyeHeight() * 0.5D - (mc.player.getY() + mc.player.getEyeHeight());
+        double dZ = target.getZ() - mc.player.getZ();
+        double horizontal = Math.sqrt(dX * dX + dZ * dZ);
+
+        float yaw = (float) (Math.atan2(dZ, dX) * 180.0D / Math.PI) - 90.0F;
+        float pitch = (float) -(Math.atan2(dY, horizontal) * 180.0D / Math.PI);
+        mc.player.setYRot(yaw);
+        mc.player.setXRot(pitch);
     }
 }
