@@ -20,9 +20,11 @@ import com.coding_dui.cestclient.modules.player.FastPlace;
 import com.coding_dui.cestclient.modules.player.Nuker;
 import com.coding_dui.cestclient.modules.render.Clock;
 import com.coding_dui.cestclient.modules.render.Coordinates;
+import com.coding_dui.cestclient.modules.render.Esp;
 import com.coding_dui.cestclient.modules.render.FpsDisplay;
 import com.coding_dui.cestclient.modules.render.Fullbright;
 import com.coding_dui.cestclient.modules.render.Ping;
+import com.coding_dui.cestclient.modules.render.Tracers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +62,8 @@ public class ModuleManager {
         register(new FpsDisplay());
         register(new Ping());
         register(new Clock());
+        register(new Esp());
+        register(new Tracers());
 
         // Misc. Kept last so its "legit mode" clamping runs after everything else.
         register(new Bypass());

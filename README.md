@@ -61,11 +61,12 @@ them and they do not appear in your chat history.
 | Combat | `AutoClicker`, `Criticals`, `KillAura`, `Orbit`, `Reach` |
 | Movement | `Flight`, `AutoSprint`, `Speed`, `Step`, `HighJump`, `NoFall`, `Velocity`, `BunnyHop` |
 | Player | `AutoRespawn`, `FastPlace`, `AutoTool`, `Nuker` |
-| Render | `Fullbright`, `Coordinates`, `FPS`, `Ping`, `Clock` |
+| Render | `Fullbright`, `Coordinates`, `FPS`, `Ping`, `Clock`, `ESP`, `Tracers` |
 | Misc | `Bypass` |
 
-> 3D world overlay modules (ESP, Tracers, Nametags) are not implemented yet — they need
-> world-to-screen drawing in 26.2's new extract-render model.
+> `ESP` and `Tracers` project entities onto the HUD rather than drawing in world space,
+> because 26.2's extract-render model exposes no world-space drawing hook. They track
+> entities while they are in front of the camera. Nametags are not implemented yet.
 
 These are singleplayer / anarchy tools. `KillAura`, `Nuker`, `Velocity`, `Reach` and
 `Criticals` are trivially detectable and will get you banned on any moderated server.
